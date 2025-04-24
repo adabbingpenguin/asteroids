@@ -4,6 +4,7 @@ from constants import *
 from player import *
 from asteroids import *
 from asteroidfield import *
+from update_high_scores import *
 
 
 def main():
@@ -29,7 +30,10 @@ def main():
 
     asteroids_to_split = []
     bullets_to_remove = []
-    
+     
+    player_score = 0
+    score_count= 0
+
 
     while True:
         pygame.Surface.fill(screen, "black")
@@ -41,7 +45,8 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collides_with(player) == True:
-                print("Game over!")
+                print(f"Game over! Score: {player_score}")
+                update_high_scores(player_score)
                 sys.exit()
 
             for bullet in shots_group:
@@ -51,6 +56,7 @@ def main():
 
         for asteroid in asteroids_to_split:
             asteroid.split(asteroids)
+            player_score += 1
 
         for bullet in bullets_to_remove:
             bullet.kill()
